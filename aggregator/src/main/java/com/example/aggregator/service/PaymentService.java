@@ -23,18 +23,10 @@ public class PaymentService {
         LinkedList<Long> usersIdList = new LinkedList<>();
         payments.forEach(p -> usersIdList.add(p.getSenderId()));
         final var userDtoList = userClient.getUsers(usersIdList);
-        return payments.stream().map(p -> PaymentWithUsername
-                .builder()
-                .id(p.getId())
-                .amount(p.getAmount())
-                .username(
-                        userDtoList.stream().
-                                filter(u -> u.getId() == p.getSenderId())
-                                .collect(Collectors.toList())
-                                .get(0).getUsername()
-                )
-                .comment(p.getComment())
-                .build()).collect(Collectors.toList());
+        return payments.stream().map(p ->
+                new PaymentWithUsername(p.getSenderId(), p.getAmount(),
+                        userDtoList.get((int) p.getId()).getUsername(),
+                        p.getComment())).collect(Collectors.toList());
     }
 
     public List<UserDto> getUsers() {
