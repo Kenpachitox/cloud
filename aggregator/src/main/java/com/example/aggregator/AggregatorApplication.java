@@ -18,21 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
-@EnableFeignClients
-@RestController
-@RequiredArgsConstructor
 @CommonsLog
 public class AggregatorApplication {
-  private final DiscoveryClient discoveryClient;
-  private final DataClient dataClient;
-
-  @GetMapping("/value")
-  public ResponseDto value() {
-//    final List<ServiceInstance> services = discoveryClient.getInstances("data");
-//    logger.info(services.stream().map(o -> o.getUri().toString()).collect(Collectors.joining(", ")));
-    return dataClient.getValue();
-  }
-
   public static void main(String[] args) {
     SpringApplication.run(AggregatorApplication.class, args);
   }

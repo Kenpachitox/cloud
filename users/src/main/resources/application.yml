@@ -1,13 +1,16 @@
-app.id: ${random.uuid}
 spring:
   cloud:
     zookeeper:
       connect-string: localhost:2181
   application:
-    name: data
+    name: users
   datasource:
     name: db
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/db?user=app&password=pass
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
 server:
   port: 0
